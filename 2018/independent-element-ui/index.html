@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="UnaidedSelector.vue将 el-select 组件封装成以下形式并作为父组件，可以使得选框的选项和配置在组件内部进行处理，使用时只需要引入继承自此组件的子组件即可。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647&lt;template&gt;  &lt;el">
+<meta property="og:type" content="article">
+<meta property="og:title" content="将部分 ElementUI 组件加工成可独立使用的组件">
+<meta property="og:url" content="https://varzy.me/2018/independent-element-ui/index.html">
+<meta property="og:site_name" content="Aiden&#39;s Blog">
+<meta property="og:description" content="UnaidedSelector.vue将 el-select 组件封装成以下形式并作为父组件，可以使得选框的选项和配置在组件内部进行处理，使用时只需要引入继承自此组件的子组件即可。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647&lt;template&gt;  &lt;el">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-12-28T01:37:27.000Z">
+<meta property="article:modified_time" content="2020-09-30T11:10:32.319Z">
+<meta property="article:author" content="Aiden Zhao">
+<meta property="article:tag" content="original">
+<meta property="article:tag" content="tutorial">
+<meta property="article:tag" content="frontend">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="typescript">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>将部分 ElementUI 组件加工成可独立使用的组件</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/blog/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/blog/true" title="Aiden&#39;s Blog" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/blog/">Home</a></li>
+         
+          <li><a href="/blog/archives/">Archive</a></li>
+         
+          <li><a href="/blog/categories/">Categories</a></li>
+         
+          <li><a href="/blog/tags/">Tags</a></li>
+         
+          <li><a href="/blog/about/">About</a></li>
+         
+          <li><a href="/blog/links/">Links</a></li>
+         
+          <li><a href="/blog/atom.xml">RSS</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2018/2017-2018-photos/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2018/laravel-simple-rbac/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://varzy.me/2018/independent-element-ui/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://varzy.me/2018/independent-element-ui/&text=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://varzy.me/2018/independent-element-ui/&title=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://varzy.me/2018/independent-element-ui/&is_video=false&description=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=将部分 ElementUI 组件加工成可独立使用的组件&body=Check out this article: https://varzy.me/2018/independent-element-ui/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://varzy.me/2018/independent-element-ui/&title=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://varzy.me/2018/independent-element-ui/&title=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://varzy.me/2018/independent-element-ui/&title=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://varzy.me/2018/independent-element-ui/&title=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://varzy.me/2018/independent-element-ui/&name=将部分 ElementUI 组件加工成可独立使用的组件&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://varzy.me/2018/independent-element-ui/&t=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#UnaidedSelector-vue"><span class="toc-number">1.</span> <span class="toc-text">UnaidedSelector.vue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UnaidedDialog-ts"><span class="toc-number">2.</span> <span class="toc-text">UnaidedDialog.ts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LazyDialog-ts"><span class="toc-number">3.</span> <span class="toc-text">LazyDialog.ts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一些最佳实践"><span class="toc-number">4.</span> <span class="toc-text">一些最佳实践</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        将部分 ElementUI 组件加工成可独立使用的组件
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Aiden's Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2018-12-28T01:37:27.000Z" itemprop="datePublished">2018-12-28</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/blog/categories/Code/">Code</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/frontend/" rel="tag">frontend</a>, <a class="tag-link" href="/blog/tags/original/" rel="tag">original</a>, <a class="tag-link" href="/blog/tags/tutorial/" rel="tag">tutorial</a>, <a class="tag-link" href="/blog/tags/typescript/" rel="tag">typescript</a>, <a class="tag-link" href="/blog/tags/vue/" rel="tag">vue</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="UnaidedSelector-vue"><a href="#UnaidedSelector-vue" class="headerlink" title="UnaidedSelector.vue"></a>UnaidedSelector.vue</h2><p>将 <code>el-select</code> 组件封装成以下形式并作为父组件，可以使得选框的选项和配置在组件内部进行处理，使用时只需要引入继承自此组件的子组件即可。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-select</span></span></span><br><span class="line"><span class="tag">    <span class="attr">v-model</span>=<span class="string">"INNER_SELECTED"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:size</span>=<span class="string">"size"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:placeholder</span>=<span class="string">"placeholder"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:clearable</span>=<span class="string">"clearable"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:loading</span>=<span class="string">"loading"</span></span></span><br><span class="line"><span class="tag">  &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-option</span></span></span><br><span class="line"><span class="tag">      <span class="attr">v-for</span>=<span class="string">"(option, index) in options"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:key</span>=<span class="string">"index"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:label</span>=<span class="string">"typeof option === 'string' ? option : option.label"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:value</span>=<span class="string">"typeof option === 'string' ? option : option.value"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:disabled</span>=<span class="string">"option.disabled"</span></span></span><br><span class="line"><span class="tag">    &gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-option</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">"ts"</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> &#123; Vue, Component, Model &#125; <span class="keyword">from</span> <span class="string">'vue-property-decorator'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> &#123; ElementUiSize &#125; <span class="keyword">from</span> <span class="string">'@/config/enums'</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript"><span class="class"><span class="keyword">interface</span> <span class="title">Option</span> </span>&#123;</span></span><br><span class="line">  label: string;</span><br><span class="line">  value: string | number;</span><br><span class="line">  disabled?: boolean;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">UnaidedSelector</span> <span class="keyword">extends</span> <span class="title">Vue</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">  <span class="keyword">protected</span> options: string[] | Option[] = [];</span></span><br><span class="line"><span class="actionscript">  <span class="keyword">protected</span> size: ElementUiSize = ElementUiSize.Medium;</span></span><br><span class="line"><span class="actionscript">  <span class="keyword">protected</span> placeholder: string = <span class="string">'请选择'</span>;</span></span><br><span class="line"><span class="actionscript">  <span class="keyword">protected</span> clearable: boolean = <span class="literal">false</span>;</span></span><br><span class="line"><span class="actionscript">  <span class="keyword">protected</span> loading: boolean = <span class="literal">false</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">  @Model(<span class="string">'change'</span>, &#123; <span class="keyword">default</span>: <span class="string">''</span> &#125;) <span class="keyword">private</span> INNER_VALUE?: string | number;</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">  <span class="keyword">get</span> INNER_SELECTED() &#123;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">return</span> <span class="keyword">this</span>.INNER_VALUE;</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="javascript">  <span class="keyword">set</span> INNER_SELECTED(val) &#123;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">this</span>.$emit(<span class="string">'change'</span>, val);</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>继承独立选框组件的子组件:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">"ts"</span>&gt;</span></span><br><span class="line">@Component</span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">SelectorDemo</span> <span class="keyword">extends</span> <span class="title">UnaidedSelector</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">  <span class="keyword">private</span> clearable = <span class="literal">true</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">  <span class="keyword">private</span> created() &#123;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">this</span>.getOptions();</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="javascript">  private <span class="keyword">async</span> getOptions(): <span class="built_in">Promise</span>&lt;<span class="keyword">void</span>&gt; &#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> data = <span class="keyword">await</span> API();</span></span><br><span class="line"><span class="javascript">    <span class="keyword">this</span>.options = data.data.map(<span class="function">(<span class="params">item: any</span>) =&gt;</span> (&#123; <span class="attr">label</span>: item.name, <span class="attr">value</span>: item.id &#125;));</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用时:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">selector-demo</span> <span class="attr">v-model</span>=<span class="string">"selected"</span>&gt;</span><span class="tag">&lt;/<span class="name">selector-demo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="UnaidedDialog-ts"><a href="#UnaidedDialog-ts" class="headerlink" title="UnaidedDialog.ts"></a>UnaidedDialog.ts</h2><p>在 ElementUI 中，对话框 <code>el-dialog</code> 是非常常用的交互组件，但假如一个页面中存在多个对话框，就会使页面逻辑变得非常臃肿，难以维护。</p>
+<p>最近做的一个项目有这样一种情况：页面中有一组数据，由表格管理，表格的每一行都有编辑和删除操作，并且还可以新增数据。其中编辑和新增的差距不大，可以使用同一套表单。那么假如不将弹窗组件拆开管理，这个页面将要同时维护一个表格组件，一个分页组件以及 3 个弹窗组件，并且加上表单验证、接口管理，这个页面的代码量将会相当可观。假如将对话框组件单独拆分，那么页面逻辑将会非常清晰:</p>
+<ul>
+<li>父页面管理查询接口，维护表格和分页</li>
+<li>“增” 和 “改” 使用对话框实现，维护增和改接口，一套表单验证</li>
+<li>“删” 使用对话框实现，维护删除接口，一套表单验证</li>
+</ul>
+<p>下面提供了一个 Mixin 文件，在 <code>el-dialog</code> 组件中使用此混入文件，可以使对话框独立得处理逻辑，与父组件之间的数据交互只使用 props 和自定义事件，保证逻辑清晰。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Vue, Component, Model, Watch &#125; <span class="keyword">from</span> <span class="string">'vue-property-decorator'</span>;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">UnaidedDialog</span> <span class="keyword">extends</span> <span class="title">Vue</span> </span>&#123;</span><br><span class="line">  <span class="keyword">get</span> UnaidedDialog_flag() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.UNAIDED_DIALOG_INNER_VALUE;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">set</span> UnaidedDialog_flag(val) &#123;</span><br><span class="line">    <span class="keyword">this</span>.$emit(<span class="string">'change'</span>, val);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Model(<span class="string">'change'</span>, &#123; <span class="attr">default</span>: <span class="literal">false</span> &#125;) protected UNAIDED_DIALOG_INNER_VALUE?: boolean;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* tslint:disable:no-empty */</span></span><br><span class="line">  protected UnaidedDialog_whenOpen() &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* tslint:disable:no-empty */</span></span><br><span class="line">  protected UnaidedDialog_whenClose() &#123;&#125;</span><br><span class="line"></span><br><span class="line">  @Watch(<span class="string">'UnaidedDialog_flag'</span>)</span><br><span class="line">  private onDialogStatusChange(val: boolean) &#123;</span><br><span class="line">    val ? (<span class="keyword">this</span> <span class="keyword">as</span> any).UnaidedDialog_whenOpen() : (<span class="keyword">this</span> <span class="keyword">as</span> any).UnaidedDialog_whenClose();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用此 Mixin 的对话框组件:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-dialog</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:visible.sync</span>=<span class="string">"UnaidedDialog_flag"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">:title</span>=<span class="string">"dialogType === 'create' ? '新增' : '编辑'"</span></span></span><br><span class="line"><span class="tag">  &gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- ... --&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">slot</span>=<span class="string">"footer"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-button</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-button</span> @<span class="attr">click</span>=<span class="string">"submit"</span>&gt;</span>保存<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-dialog</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">"ts"</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> &#123; Component, Prop, Mixins &#125; <span class="keyword">from</span> <span class="string">'vue-property-decorator'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> UnaidedDialog <span class="keyword">from</span> <span class="string">'@/mixins/UnaidedDialog'</span>;</span></span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">DialogDemo</span> <span class="keyword">extends</span> <span class="title">Mixins</span>(<span class="title">UnaidedDialog</span>) </span>&#123;</span></span><br><span class="line">  @Prop(&#123;</span><br><span class="line"><span class="javascript">    type: <span class="built_in">String</span>,</span></span><br><span class="line"><span class="javascript">    validator: <span class="function">(<span class="params">val: string</span>) =&gt;</span> [<span class="string">'create'</span>, <span class="string">'edit'</span>].includes(val)</span></span><br><span class="line">  &#125;)</span><br><span class="line"><span class="actionscript">  <span class="keyword">private</span> dialogType!: string;</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">  <span class="keyword">private</span> async UnaidedDialog_whenOpen() &#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> data = <span class="keyword">await</span> API();</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用独立对话框:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- flag 用于控制对话框显隐 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dialog-demo</span> <span class="attr">v-model</span>=<span class="string">"dialog.flag"</span> <span class="attr">:dialog-type</span>=<span class="string">"dialog.type"</span>&gt;</span><span class="tag">&lt;/<span class="name">dialog-demo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="LazyDialog-ts"><a href="#LazyDialog-ts" class="headerlink" title="LazyDialog.ts"></a>LazyDialog.ts</h2><p>这个 Mixin 是对话框组件的补充。有些时候需要在弹窗首次打开的时候做一些操作，再次打开则不再触发，这种需求可以使用下方的 Mixin 实现。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Vue, Component, Watch &#125; <span class="keyword">from</span> <span class="string">'vue-property-decorator'</span>;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyDialog</span> <span class="keyword">extends</span> <span class="title">Vue</span> </span>&#123;</span><br><span class="line">  private LAZY_DIALOG_INIT_TIMES: number = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  @Watch(<span class="string">'UnaidedDialog_flag'</span>)</span><br><span class="line">  protected onLazyDialogInitTimesChange(val: number) &#123;</span><br><span class="line">    <span class="keyword">if</span> (val &amp;&amp; <span class="keyword">this</span>.LAZY_DIALOG_INIT_TIMES &lt; <span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.LAZY_DIALOG_INIT_TIMES++;</span><br><span class="line">      (<span class="keyword">this</span> <span class="keyword">as</span> any).LazyDialog_created();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用此 Mixin:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">"ts"</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> UnaidedDialog <span class="keyword">from</span> <span class="string">'@/mixins/UnaidedDialog'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> LazyDialog <span class="keyword">from</span> <span class="string">'@/mixins/LazyDialog'</span>;</span></span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">DialogWithLazyDialog</span> <span class="keyword">extends</span> <span class="title">Mixins</span>(<span class="title">UnaidedDialog</span>, <span class="title">LazyDialog</span>) </span>&#123;</span></span><br><span class="line"><span class="actionscript">  <span class="keyword">private</span> LazyDialog_created() &#123;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">this</span>.getInitData();</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="一些最佳实践"><a href="#一些最佳实践" class="headerlink" title="一些最佳实践"></a>一些最佳实践</h2><ul>
+<li>可以在 <code>UnaidedDialog_whenOpen</code> 中获取数据并填充进表单，接着进行表单验证</li>
+<li>在 <code>UnaidedDialog_whenClose</code> 中清空表单并重置表单验证</li>
+<li>如果使用对话框提交表单，那么应当将提交结果通过 <code>$emit()</code> 传递至父组件，由父组件处理后续事件</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/blog/">Home</a></li>
+        
+          <li><a href="/blog/archives/">Archive</a></li>
+        
+          <li><a href="/blog/categories/">Categories</a></li>
+        
+          <li><a href="/blog/tags/">Tags</a></li>
+        
+          <li><a href="/blog/about/">About</a></li>
+        
+          <li><a href="/blog/links/">Links</a></li>
+        
+          <li><a href="/blog/atom.xml">RSS</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#UnaidedSelector-vue"><span class="toc-number">1.</span> <span class="toc-text">UnaidedSelector.vue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UnaidedDialog-ts"><span class="toc-number">2.</span> <span class="toc-text">UnaidedDialog.ts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LazyDialog-ts"><span class="toc-number">3.</span> <span class="toc-text">LazyDialog.ts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一些最佳实践"><span class="toc-number">4.</span> <span class="toc-text">一些最佳实践</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://varzy.me/2018/independent-element-ui/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://varzy.me/2018/independent-element-ui/&text=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://varzy.me/2018/independent-element-ui/&title=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://varzy.me/2018/independent-element-ui/&is_video=false&description=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=将部分 ElementUI 组件加工成可独立使用的组件&body=Check out this article: https://varzy.me/2018/independent-element-ui/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://varzy.me/2018/independent-element-ui/&title=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://varzy.me/2018/independent-element-ui/&title=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://varzy.me/2018/independent-element-ui/&title=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://varzy.me/2018/independent-element-ui/&title=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://varzy.me/2018/independent-element-ui/&name=将部分 ElementUI 组件加工成可独立使用的组件&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://varzy.me/2018/independent-element-ui/&t=将部分 ElementUI 组件加工成可独立使用的组件" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <!-- <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a> -->
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2015-2020
+    Aiden Zhao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/blog/">Home</a></li>
+         
+          <li><a href="/blog/archives/">Archive</a></li>
+         
+          <li><a href="/blog/categories/">Categories</a></li>
+         
+          <li><a href="/blog/tags/">Tags</a></li>
+         
+          <li><a href="/blog/about/">About</a></li>
+         
+          <li><a href="/blog/links/">Links</a></li>
+         
+          <li><a href="/blog/atom.xml">RSS</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/blog/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zys-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>

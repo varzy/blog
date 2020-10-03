@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="为了方便自己使用，整理了一版 Git 常用命令，大部分摘抄自 阮一峰的网络日志: 常用 Git 命令清单。本文中以 {} 包裹的为必填参数，以 [] 包裹的为可选参数。 配置12345# 添加 git 使用者的名字git config --global user.name &quot;&amp;#123;user_name&amp;#125;&quot;# 添加 git 使用者的邮箱git config --global user.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 命令梳理">
+<meta property="og:url" content="https://varzy.me/2016/git-comb/index.html">
+<meta property="og:site_name" content="Aiden&#39;s Blog">
+<meta property="og:description" content="为了方便自己使用，整理了一版 Git 常用命令，大部分摘抄自 阮一峰的网络日志: 常用 Git 命令清单。本文中以 {} 包裹的为必填参数，以 [] 包裹的为可选参数。 配置12345# 添加 git 使用者的名字git config --global user.name &quot;&amp;#123;user_name&amp;#125;&quot;# 添加 git 使用者的邮箱git config --global user.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-11-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-30T11:10:32.318Z">
+<meta property="article:author" content="Aiden Zhao">
+<meta property="article:tag" content="original">
+<meta property="article:tag" content="git">
+<meta property="article:tag" content="github">
+<meta property="article:tag" content="tutorial">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Git 命令梳理</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/blog/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/blog/true" title="Aiden&#39;s Blog" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/blog/">Home</a></li>
+         
+          <li><a href="/blog/archives/">Archive</a></li>
+         
+          <li><a href="/blog/categories/">Categories</a></li>
+         
+          <li><a href="/blog/tags/">Tags</a></li>
+         
+          <li><a href="/blog/about/">About</a></li>
+         
+          <li><a href="/blog/links/">Links</a></li>
+         
+          <li><a href="/blog/atom.xml">RSS</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2016/hello-hexo/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2016/school-stipend/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://varzy.me/2016/git-comb/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://varzy.me/2016/git-comb/&text=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://varzy.me/2016/git-comb/&title=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://varzy.me/2016/git-comb/&is_video=false&description=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git 命令梳理&body=Check out this article: https://varzy.me/2016/git-comb/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://varzy.me/2016/git-comb/&title=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://varzy.me/2016/git-comb/&title=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://varzy.me/2016/git-comb/&title=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://varzy.me/2016/git-comb/&title=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://varzy.me/2016/git-comb/&name=Git 命令梳理&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://varzy.me/2016/git-comb/&t=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">1.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新建仓库"><span class="toc-number">2.</span> <span class="toc-text">新建仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加文件"><span class="toc-number">3.</span> <span class="toc-text">添加文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除文件"><span class="toc-number">4.</span> <span class="toc-text">删除文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提交"><span class="toc-number">5.</span> <span class="toc-text">提交</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看"><span class="toc-number">6.</span> <span class="toc-text">查看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#撤销"><span class="toc-number">7.</span> <span class="toc-text">撤销</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分支"><span class="toc-number">8.</span> <span class="toc-text">分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标签"><span class="toc-number">9.</span> <span class="toc-text">标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH-Key"><span class="toc-number">10.</span> <span class="toc-text">SSH Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#克隆"><span class="toc-number">11.</span> <span class="toc-text">克隆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉取"><span class="toc-number">12.</span> <span class="toc-text">拉取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推送"><span class="toc-number">13.</span> <span class="toc-text">推送</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改远程仓库"><span class="toc-number">14.</span> <span class="toc-text">修改远程仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子模块"><span class="toc-number">15.</span> <span class="toc-text">子模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置命令别名"><span class="toc-number">16.</span> <span class="toc-text">配置命令别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置-socks5-代理"><span class="toc-number">17.</span> <span class="toc-text">设置 socks5 代理</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Git 命令梳理
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Aiden's Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2016-11-11T16:00:00.000Z" itemprop="datePublished">2016-11-12</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/blog/categories/Code/">Code</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/git/" rel="tag">git</a>, <a class="tag-link" href="/blog/tags/github/" rel="tag">github</a>, <a class="tag-link" href="/blog/tags/original/" rel="tag">original</a>, <a class="tag-link" href="/blog/tags/tutorial/" rel="tag">tutorial</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>为了方便自己使用，整理了一版 Git 常用命令，大部分摘抄自 <a href="https://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html" target="_blank" rel="noopener">阮一峰的网络日志: 常用 Git 命令清单</a>。本文中以 <code>{}</code> 包裹的为必填参数，以 <code>[]</code> 包裹的为可选参数。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加 git 使用者的名字</span></span><br><span class="line">git config --global user.name <span class="string">"&#123;user_name&#125;"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 git 使用者的邮箱</span></span><br><span class="line">git config --global user.email <span class="string">"&#123;user_email&#125;"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="新建仓库"><a href="#新建仓库" class="headerlink" title="新建仓库"></a>新建仓库</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化一个 Git 仓库</span></span><br><span class="line"><span class="comment"># `floder`: 新建一个名为 [floder] 的 Git 仓库</span></span><br><span class="line"><span class="comment"># `--bare`: 新建一个裸仓库</span></span><br><span class="line">git init [floder] [--bare]</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加文件"><a href="#添加文件" class="headerlink" title="添加文件"></a>添加文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加所有文件到暂存区​</span></span><br><span class="line">git add .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加指定文件或指定文件夹到暂存区</span></span><br><span class="line">git add &#123;dir&#125;/&#123;file&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加某个类型的所有文件到暂存区</span></span><br><span class="line">git add *.&#123;<span class="built_in">type</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将文件添加到暂存区时，需要依次手动确认</span></span><br><span class="line">git add -p</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除工作区的文件，并记录下此次删除操作</span></span><br><span class="line"><span class="comment"># `--cached`: 停止追踪指定文件，但该文件仍会保留在工作区</span></span><br><span class="line">git rm &#123;file&#125; [--cached]</span><br></pre></td></tr></table></figure>
+
+<h2 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 提交暂存区的所有文件到版本库，并添加提交信息</span></span><br><span class="line"><span class="comment"># `files1 file2 ...`: 仅提交指定的文件到版本库</span></span><br><span class="line">git commit -m <span class="string">"[description]"</span> [file1 file2 ...]</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示各个文件当前的变更情况</span></span><br><span class="line">git status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示当前分支的版本历史，默认显示三次。可以在后面跟 -[num] 参数自定义显示次数</span></span><br><span class="line"><span class="comment"># `--pretty=oneline`: 参数可以显示简略信息，每条信息只占一行</span></span><br><span class="line"><span class="comment"># `--graph`: 显示分支合并图</span></span><br><span class="line">git <span class="built_in">log</span> [-num] [--pretty=oneline] [--graph]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 HEAD 的每一次变化历史。可用于将已经回退到过去版本的 HEAD 再次移动到更新的版本</span></span><br><span class="line">git reflog</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示所有文件的暂存区和工作区的差异</span></span><br><span class="line"><span class="comment"># `-- file`: 仅显示某个文件的暂存区和工作区的差异</span></span><br><span class="line">git diff [-- &#123;file&#125;]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示所有文件的工作区与当前分支最新 commit 之间的差异</span></span><br><span class="line"><span class="comment"># `-- file`: # 仅显示某个文件的工作区与当前分支最新 commit 之间的差异</span></span><br><span class="line">git diff HEAD [-- &#123;file&#125;]</span><br></pre></td></tr></table></figure>
+
+<h2 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将某个文件回到最近一次 git commit 或 git add 时的状态</span></span><br><span class="line"><span class="comment"># `commit`: 将某个文件恢复到该次 commit 时的状态</span></span><br><span class="line">git checkout &#123;file&#125; [commit]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 恢复目前暂存区的所有文件到工作区</span></span><br><span class="line">git checkout .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重置暂存区与工作区，与上一次 commit 保持一致​</span></span><br><span class="line">git reset --hard</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将文件版本快速回退至上一个版本。在 Git 中，HEAD 表示当前版本，上一个版本是 HEAD^，上上一个版本是 HEAD^^。也可以用数字表示，比如上 100 个版本是 HEAD~100</span></span><br><span class="line">git reset --hard HEAD^</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重置当前分支的 HEAD 为 指定commit</span></span><br><span class="line"><span class="comment"># `--hard`: 重置 HEAD 的同时重置暂存区和工作区</span></span><br><span class="line"><span class="comment"># `--mixed`: 重置 HEAD 的同时将当前修改存放到工作区</span></span><br><span class="line"><span class="comment"># `--soft`: 重置 HEAD 的同时将当前修改存放到暂存区</span></span><br><span class="line">git reset [&#123;--hard&#125;/&#123;--mixed&#125;/&#123;--soft&#125;] [commit]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将未提交的变化暂时保存起来并清空暂存区和工作区</span></span><br><span class="line">git stash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将未提交的变化再次移入，工作区和暂存区将再次出现之前的修改</span></span><br><span class="line">git stash pop</span><br></pre></td></tr></table></figure>
+
+<h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出所有本地分支</span></span><br><span class="line"><span class="comment"># `-r`: 列出所有远程分支</span></span><br><span class="line"><span class="comment"># `-a`: 列出所有本地分支和远程分支</span></span><br><span class="line"><span class="comment"># `branch`: 新建一个分支，但版本库依然停留在当前分支</span></span><br><span class="line">git branch [-r] [-a] [branch]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建一个指向指定 commit 的分支</span></span><br><span class="line">git branch &#123;branch&#125; &#123;commit&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建一个分支，并切换到该分支</span></span><br><span class="line">git checkout -b &#123;branch&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在本地新建一个分支，并将其与某个远程分支建立追踪</span></span><br><span class="line">git checkout -b &#123;branch&#125; origin/&#123;branch&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建一个空白分支​。可用于创建 gh-pages 分支</span></span><br><span class="line">git checkout --orphan &#123;branch&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除本地分支</span></span><br><span class="line">git branch -d &#123;branch&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除远程分支</span></span><br><span class="line">git push origin -d &#123;branch&#125;</span><br><span class="line">git branch -dr &#123;remote/branch&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用快速合并，合并指定分支到当前分支</span></span><br><span class="line"><span class="comment"># `--no-ff`: 使用正常合并，合并指定分支到当前分支​</span></span><br><span class="line">git merge [--no-ff] &#123;branch&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在一个分支里提交的改变移到另一个分支里重放一遍</span></span><br><span class="line">git rebase &#123;branch&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出所有标签</span></span><br><span class="line">git tag</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在当前 commit 新建一个标签</span></span><br><span class="line"><span class="comment"># `commit`: 在指定 commit 上新建一个标签</span></span><br><span class="line">git tag &#123;tag&#125; [commit]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看标签信息</span></span><br><span class="line">git show &#123;tag&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提交指定标签到远程仓库</span></span><br><span class="line">git push origin &#123;tag&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提交所有标签到远程仓库</span></span><br><span class="line">git push origin --tags</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除本地标签</span></span><br><span class="line">git tag -d &#123;tag&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除远程仓库的某个标签。前提是必须先删除本地标签</span></span><br><span class="line">git push origin :refs/tags/&#123;tag&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建一个指向某个标签的分支</span></span><br><span class="line">git checkout -b &#123;branch&#125; &#123;tag&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SSH-Key"><a href="#SSH-Key" class="headerlink" title="SSH Key"></a>SSH Key</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建 SSH 密钥</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">"&#123;user_email&#125;"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试是否顺利连接到 Github</span></span><br><span class="line">ssh -T git@github.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试是否顺利连接到 Coding.net</span></span><br><span class="line">ssh -T git@git.coding.net</span><br></pre></td></tr></table></figure>
+
+<h2 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 克隆远程仓库</span></span><br><span class="line"><span class="comment"># `--depth num`: 克隆深度。--depth 10 就表示仅克隆最近 10 次的 commit</span></span><br><span class="line">git <span class="built_in">clone</span> &#123;URL&#125; [--depth &#123;num&#125;]</span><br></pre></td></tr></table></figure>
+
+<h2 id="拉取"><a href="#拉取" class="headerlink" title="拉取"></a>拉取</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 显示所有远程仓库</span></span><br><span class="line">git remote -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示某个远程仓库的信息</span></span><br><span class="line"><span class="comment"># `remote`: 当只有一个远程仓库时可省略</span></span><br><span class="line">git remote show [remote]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拉取远程仓库相应追踪分支的更改并直接合并到本地当前分支。如果当前分支只有一个追踪分支，连远程主机名都可以省略</span></span><br><span class="line">git pull [remote] [remote_branch]:[local_branch]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 取回远程仓库的变化，并直接与本地分支合并</span></span><br><span class="line"><span class="comment"># `branch`: 当本地分支与远程分支建立追踪关系后可以省略</span></span><br><span class="line">git pull origin [branch]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载远程仓库的所有变动</span></span><br><span class="line"><span class="comment"># `remote`: 当只有一个远程仓库时可省略</span></span><br><span class="line"><span class="comment"># `-p`: 获取远程仓库对远程分支的删除操作</span></span><br><span class="line">git fetch [remote] [-p]</span><br></pre></td></tr></table></figure>
+
+<h2 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 推送本地当前分支的修改到远程仓库相应追踪分支。如果当前分支只有一个追踪分支，连远程主机名都可以省略</span></span><br><span class="line"><span class="comment"># 如果该远程分支不存在，则会被新建</span></span><br><span class="line"><span class="comment"># 注意，分支推送顺序的写法是 &lt;来源地&gt;:&lt;目的地&gt;，所以 git pull 是 &lt;远程分支&gt;:&lt;本地分支&gt;，而 git push 是 &lt;本地分支&gt;:&lt;远程分支&gt;</span></span><br><span class="line">git push [remote] [local_branch]:[remote_branch]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把一个本地分支推送到远程并建立追踪关系，一般用于将本地提交首次推送到远程仓库</span></span><br><span class="line">git push -u origin &#123;branch&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传本地指定分支到远程仓库</span></span><br><span class="line"><span class="comment"># `-a`: 推送当前所有分支到远程仓库</span></span><br><span class="line">git push origin &#123;branch&#125; [-a]</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改远程仓库"><a href="#修改远程仓库" class="headerlink" title="修改远程仓库"></a>修改远程仓库</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加一个名为 origin 的远程仓库</span></span><br><span class="line">git remote add origin [name] &#123;URL&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加一个名为 name 的新远程仓库</span></span><br><span class="line">git remote add &#123;name&#125; &#123;URL&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改当前仓库的远程仓库地址</span></span><br><span class="line"><span class="comment"># `--add`: 添加一个新的远程仓库，但其名字仍为 origin。此时推送至远程时，可以实现一键推荐至多个仓库；但拉取时，仅能拉取 .git/config 中列出的第一个远程仓库</span></span><br><span class="line">git remote <span class="built_in">set</span>-url [--add] origin &#123;URL&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="子模块"><a href="#子模块" class="headerlink" title="子模块"></a>子模块</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加子模块</span></span><br><span class="line">git submodule add &#123;URL&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化本地的子模块配置</span></span><br><span class="line">git submodule init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新子模块</span></span><br><span class="line">git submodule update</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置命令别名"><a href="#配置命令别名" class="headerlink" title="配置命令别名"></a>配置命令别名</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置命令别名。比如用 cl 代替 clone</span></span><br><span class="line"><span class="comment"># --global 参数是全局参数，也就是这些命令在这台电脑的所有 Git 仓库下都有用</span></span><br><span class="line"><span class="comment"># 此修改将保存至 .gitconfig 文件中，也可以直接进入 .gitconfig 文件批量修改</span></span><br><span class="line">git config --global <span class="built_in">alias</span>.&#123;<span class="built_in">alias</span>&#125; &#123;origin&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置-socks5-代理"><a href="#设置-socks5-代理" class="headerlink" title="设置 socks5 代理"></a>设置 socks5 代理</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 域名及端口号需要自行修改</span></span><br><span class="line">git config --global --<span class="built_in">unset</span> http.proxy</span><br><span class="line">git config --global --<span class="built_in">unset</span> https.proxy</span><br><span class="line">git config --global http.proxy <span class="string">'socks5://127.0.0.1:1086'</span></span><br><span class="line">git config --global https.proxy <span class="string">'socks5://127.0.0.1:1086'</span></span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/blog/">Home</a></li>
+        
+          <li><a href="/blog/archives/">Archive</a></li>
+        
+          <li><a href="/blog/categories/">Categories</a></li>
+        
+          <li><a href="/blog/tags/">Tags</a></li>
+        
+          <li><a href="/blog/about/">About</a></li>
+        
+          <li><a href="/blog/links/">Links</a></li>
+        
+          <li><a href="/blog/atom.xml">RSS</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">1.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#新建仓库"><span class="toc-number">2.</span> <span class="toc-text">新建仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加文件"><span class="toc-number">3.</span> <span class="toc-text">添加文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除文件"><span class="toc-number">4.</span> <span class="toc-text">删除文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提交"><span class="toc-number">5.</span> <span class="toc-text">提交</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看"><span class="toc-number">6.</span> <span class="toc-text">查看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#撤销"><span class="toc-number">7.</span> <span class="toc-text">撤销</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分支"><span class="toc-number">8.</span> <span class="toc-text">分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标签"><span class="toc-number">9.</span> <span class="toc-text">标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH-Key"><span class="toc-number">10.</span> <span class="toc-text">SSH Key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#克隆"><span class="toc-number">11.</span> <span class="toc-text">克隆</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉取"><span class="toc-number">12.</span> <span class="toc-text">拉取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推送"><span class="toc-number">13.</span> <span class="toc-text">推送</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改远程仓库"><span class="toc-number">14.</span> <span class="toc-text">修改远程仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子模块"><span class="toc-number">15.</span> <span class="toc-text">子模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置命令别名"><span class="toc-number">16.</span> <span class="toc-text">配置命令别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置-socks5-代理"><span class="toc-number">17.</span> <span class="toc-text">设置 socks5 代理</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://varzy.me/2016/git-comb/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://varzy.me/2016/git-comb/&text=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://varzy.me/2016/git-comb/&title=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://varzy.me/2016/git-comb/&is_video=false&description=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git 命令梳理&body=Check out this article: https://varzy.me/2016/git-comb/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://varzy.me/2016/git-comb/&title=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://varzy.me/2016/git-comb/&title=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://varzy.me/2016/git-comb/&title=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://varzy.me/2016/git-comb/&title=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://varzy.me/2016/git-comb/&name=Git 命令梳理&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://varzy.me/2016/git-comb/&t=Git 命令梳理" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <!-- <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a> -->
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2015-2020
+    Aiden Zhao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/blog/">Home</a></li>
+         
+          <li><a href="/blog/archives/">Archive</a></li>
+         
+          <li><a href="/blog/categories/">Categories</a></li>
+         
+          <li><a href="/blog/tags/">Tags</a></li>
+         
+          <li><a href="/blog/about/">About</a></li>
+         
+          <li><a href="/blog/links/">Links</a></li>
+         
+          <li><a href="/blog/atom.xml">RSS</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/blog/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zys-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>

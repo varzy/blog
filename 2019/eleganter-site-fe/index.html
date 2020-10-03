@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="实不相瞒我已经很久没有写过前后端不分离的项目了，几乎都是 vue create xxx 一把梭。我喜欢前后端分离的开发模式，好处是不会相互干扰，各干各的，前端不需要装 PHP 或者 Python 才能把项目跑起来，后端也不需要再去套模板渲染数据。但往往处于 SEO 等各种需求，有些项目还真就不能前后端分离了事，这种情况下怎么优雅得编写前端代码就是个大坑。 最近接触了一个基于 Django 框架，前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前后端不分离，也要优雅得写前端！">
+<meta property="og:url" content="https://varzy.me/2019/eleganter-site-fe/index.html">
+<meta property="og:site_name" content="Aiden&#39;s Blog">
+<meta property="og:description" content="实不相瞒我已经很久没有写过前后端不分离的项目了，几乎都是 vue create xxx 一把梭。我喜欢前后端分离的开发模式，好处是不会相互干扰，各干各的，前端不需要装 PHP 或者 Python 才能把项目跑起来，后端也不需要再去套模板渲染数据。但往往处于 SEO 等各种需求，有些项目还真就不能前后端分离了事，这种情况下怎么优雅得编写前端代码就是个大坑。 最近接触了一个基于 Django 框架，前">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-10-24T13:31:24.000Z">
+<meta property="article:modified_time" content="2020-09-30T11:10:32.320Z">
+<meta property="article:author" content="Aiden Zhao">
+<meta property="article:tag" content="original">
+<meta property="article:tag" content="recommend">
+<meta property="article:tag" content="frontend">
+<meta property="article:tag" content="laravel">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="django">
+<meta property="article:tag" content="laravel-mix">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>前后端不分离，也要优雅得写前端！</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/blog/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/blog/true" title="Aiden&#39;s Blog" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/blog/">Home</a></li>
+         
+          <li><a href="/blog/archives/">Archive</a></li>
+         
+          <li><a href="/blog/categories/">Categories</a></li>
+         
+          <li><a href="/blog/tags/">Tags</a></li>
+         
+          <li><a href="/blog/about/">About</a></li>
+         
+          <li><a href="/blog/links/">Links</a></li>
+         
+          <li><a href="/blog/atom.xml">RSS</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2019/my-desktop/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2019/my-sspai-methodology/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://varzy.me/2019/eleganter-site-fe/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://varzy.me/2019/eleganter-site-fe/&text=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://varzy.me/2019/eleganter-site-fe/&title=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://varzy.me/2019/eleganter-site-fe/&is_video=false&description=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=前后端不分离，也要优雅得写前端！&body=Check out this article: https://varzy.me/2019/eleganter-site-fe/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://varzy.me/2019/eleganter-site-fe/&title=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://varzy.me/2019/eleganter-site-fe/&title=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://varzy.me/2019/eleganter-site-fe/&title=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://varzy.me/2019/eleganter-site-fe/&title=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://varzy.me/2019/eleganter-site-fe/&name=前后端不分离，也要优雅得写前端！&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://varzy.me/2019/eleganter-site-fe/&t=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#传统是什么样的？"><span class="toc-number">1.</span> <span class="toc-text">传统是什么样的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#痛点在哪里？"><span class="toc-number">2.</span> <span class="toc-text">痛点在哪里？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎样才算优雅？"><span class="toc-number">3.</span> <span class="toc-text">怎样才算优雅？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#那就优雅一把"><span class="toc-number">4.</span> <span class="toc-text">那就优雅一把</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何组织前端资源"><span class="toc-number">5.</span> <span class="toc-text">如何组织前端资源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尾巴"><span class="toc-number">6.</span> <span class="toc-text">尾巴</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        前后端不分离，也要优雅得写前端！
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Aiden's Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-10-24T13:31:24.000Z" itemprop="datePublished">2019-10-24</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/blog/categories/Code/">Code</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/django/" rel="tag">django</a>, <a class="tag-link" href="/blog/tags/frontend/" rel="tag">frontend</a>, <a class="tag-link" href="/blog/tags/javascript/" rel="tag">javascript</a>, <a class="tag-link" href="/blog/tags/laravel/" rel="tag">laravel</a>, <a class="tag-link" href="/blog/tags/laravel-mix/" rel="tag">laravel-mix</a>, <a class="tag-link" href="/blog/tags/original/" rel="tag">original</a>, <a class="tag-link" href="/blog/tags/recommend/" rel="tag">recommend</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>实不相瞒我已经很久没有写过前后端不分离的项目了，几乎都是 <code>vue create xxx</code> 一把梭。我喜欢前后端分离的开发模式，好处是不会相互干扰，各干各的，前端不需要装 PHP 或者 Python 才能把项目跑起来，后端也不需要再去套模板渲染数据。但往往处于 SEO 等各种需求，有些项目还真就不能前后端分离了事，这种情况下怎么优雅得编写前端代码就是个大坑。</p>
+<p>最近接触了一个基于 Django 框架，前后端不分离的项目，关于如何优雅得编写前端我也想了很多，最终花了一天多的时间搞了一套感觉还算是普适性不错、实施也比较简单的方法论。这篇文章将会讲解我的思路，并且以 Django 框架为例给出 Demo。</p>
+<h2 id="传统是什么样的？"><a href="#传统是什么样的？" class="headerlink" title="传统是什么样的？"></a>传统是什么样的？</h2><p>首先我们会新建一个基础的布局文件 <code>base.html</code>:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;% load static %&#125;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"icon"</span> <span class="attr">type</span>=<span class="string">"image/png"</span> <span class="attr">href</span>=<span class="string">"&#123;% static 'favicon.ico' %&#125;"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"&#123;% static 'css/reset.css' %&#125;"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"&#123;% static 'css/bootstrap.min.css' %&#125;"</span>&gt;</span></span><br><span class="line">  &#123;% block styles %&#125; &#123;% endblock %&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  &#123;% block content %&#125; &#123;% endblock %&#125;</span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"&#123;% static 'js/jquery.min.js' %&#125;"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"&#123;% static 'js/bootstrap.min.js' %&#125;"</span>&gt;</span></span><br><span class="line">  &#123;% block scripts %&#125; &#123;% endblock %&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>接着我们会创建一个首页的模板文件 <code>index.html</code>，它继承了基础的模板：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;% extends "../layouts/base.html" %&#125;</span><br><span class="line">&#123;% load static %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block styles %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"&#123;% static 'css/index.css' %&#125;"</span>&gt;</span></span><br><span class="line">&#123;% endblock %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block content %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"index"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"indexCarousel"</span> <span class="attr">class</span>=<span class="string">"carousel slide"</span> <span class="attr">data-ride</span>=<span class="string">"carousel"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"btn"</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">&#123;% endblock %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block scripts %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"&#123;% static 'js/index.js' %&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  $(<span class="string">'.btn'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; ... &#125;)</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当在 <code>urls.py</code> 里为 <code>index.html</code> 加上路由之后，页面将被成功地运行起来，简直棒呆了——吗？</p>
+<h2 id="痛点在哪里？"><a href="#痛点在哪里？" class="headerlink" title="痛点在哪里？"></a>痛点在哪里？</h2><p>上面那些看似合情合理的代码其实有非常多的槽点。</p>
+<p>首先，你的代码编辑器大概率会因为找不到 <code>$</code> 变量而提示一个波浪线 (如果你的编辑器不是 Notepad 或者 Editplus 的话)</p>
+<p>其次，页面中的 CSS 文件和 JS 代码都必须考虑浏览器的兼容性，这意味着绝大部分新鲜的语法都不能直接使用，并且伴随着大量的 <code>-webkit-</code> 和 <code>var that = this</code>。</p>
+<p>再次，JS 逻辑将会毫无保留得全部暴露，网站的安全性大打折扣。</p>
+<p>最后，如果每个页面引入的文件都不一样，每次进入页面因为加载资源而产生的 HTTP 请求数量将会很多，大幅增加用户等待时间。</p>
+<h2 id="怎样才算优雅？"><a href="#怎样才算优雅？" class="headerlink" title="怎样才算优雅？"></a>怎样才算优雅？</h2><ul>
+<li>我想用 ES6、TS、Vue、React……</li>
+<li>我想用 Sass、Less、Stylus……</li>
+<li>我想用 Prettier、ESLint……</li>
+<li>我想自动混淆前端的变化名……</li>
+<li>我想给资源自动添加版本号……</li>
+<li>我还想实现浏览器自动刷新、模块热重载……</li>
+</ul>
+<p>不得不说，如今的前端就像三里屯的姑娘，BlingBling 的外表来源于一万个瓶瓶罐罐，但假如她把妆卸了，他的男朋友又会捂着脸说：“嗨，你还是全副武装的样子更诱人”。</p>
+<h2 id="那就优雅一把"><a href="#那就优雅一把" class="headerlink" title="那就优雅一把"></a>那就优雅一把</h2><blockquote>
+<p>不管你代码长什么样，只要我认，这个页面就能跑。——IE 以外的浏览器</p>
+</blockquote>
+<p>既然有了这条铁律，那么我们只需要在五花八门的各类模板引擎中，想办法加载静态资源就可以了。至于我们的源码是 TS 还是 JS，是 Sass 还是 Less，图片是在线地址还是 Base 64 都无所谓。感谢 Node.js，Webpack，Gulp……虽然大部分时间我都恨死了她们，但有了她们，我们就可以对前端资源为所欲为了！</p>
+<p>以 Django 项目为例，我的思路是这样的：</p>
+<ul>
+<li>所有的前端资源都放在根目录下，方便通过 npm 进行管理</li>
+<li>使用 Webpack 等工具对前端项目进行打包后，自动输出到 <code>/project/static</code> 目录下</li>
+<li>基础的布局文件永远只引入 <code>static</code> 下几个打包后的资源文件</li>
+<li>对于某些无法被打包工具处理的资源，直接复制到 <code>static</code> 目录下进行引用</li>
+<li>所有的 JS 逻辑都尽可能得通过 Webpack 进行处理，页面上通过一个加载器注册当前页面需要的功能</li>
+</ul>
+<p>迫于自己的 Webpack 能力实在捉急，我选用了 <a href="https://laravel-mix.com/" target="_blank" rel="noopener">Laravel-Mix</a> 来处理前端资源。实际上这种思路已经不再挑框架和打包工具了，可以把 Django 换成其他任意框架，Laravel-Mix 换成自己手动配置的 Webpack 和 Gulp，都是没有问题的。</p>
+<p>首先安装一些必要的前端依赖，并且创建基础的资源目录。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br><span class="line">npm i -D laravel-mix prettier eslint ...</span><br><span class="line">npm i jquery lodash bootstrap normalize.css ...</span><br><span class="line"></span><br><span class="line">touch webpack.mix.js</span><br><span class="line">mkdir -p resources/&#123;js,scss&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>webpack.mix.js</code> 中进行基础的 Laravel-Mix 配置。详细的配置可以参考 Laravel-Mix 的官方文档。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mix = <span class="built_in">require</span>(<span class="string">'laravel-mix'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> calcSrcPath = <span class="function"><span class="params">path</span> =&gt;</span> <span class="string">`./resources/<span class="subst">$&#123;path&#125;</span>`</span>;</span><br><span class="line"><span class="keyword">const</span> calcDistPath = <span class="function"><span class="params">path</span> =&gt;</span> <span class="string">`./jgmsys/static/<span class="subst">$&#123;path&#125;</span>`</span>;</span><br><span class="line"><span class="comment">// 此处请根据自己的 ip 地址进行替换。本机开发一般为 localhost</span></span><br><span class="line"><span class="comment">// 端口与 Django 开发环境的端口号一致。如果使用了 nginx，则与该站点的 nginx 端口一致</span></span><br><span class="line"><span class="keyword">const</span> djangoServer = <span class="string">'0.0.0.0:8000'</span>;</span><br><span class="line"></span><br><span class="line">mix</span><br><span class="line">  .js(calcSrcPath(<span class="string">'js/bootstrap.js'</span>), calcDistPath(<span class="string">'js'</span>))</span><br><span class="line">  .js(calcSrcPath(<span class="string">'js/app.js'</span>), calcDistPath(<span class="string">'js'</span>))</span><br><span class="line">  .sass(calcSrcPath(<span class="string">'scss/app.scss'</span>), calcDistPath(<span class="string">'css'</span>))</span><br><span class="line">  .copy(calcSrcPath(<span class="string">'favicon.ico'</span>), calcDistPath(<span class="string">'favicon.ico'</span>))</span><br><span class="line">  .copyDirectory(calcSrcPath(<span class="string">'vendor'</span>), calcDistPath(<span class="string">'vendor'</span>))</span><br><span class="line">  .extract([<span class="string">'jquery'</span>, <span class="string">'bootstrap'</span>, <span class="string">'lodash'</span>, <span class="string">'normalize.css'</span>, <span class="string">'vue'</span>, <span class="string">'popper.js'</span>]);</span><br><span class="line"></span><br><span class="line">mix</span><br><span class="line">  .setPublicPath(calcDistPath())</span><br><span class="line">  .disableSuccessNotifications()</span><br><span class="line">  .browserSync(djangoServer);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (mix.inProduction()) mix.version();</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>package.json</code> 中添加 Laravel-Mix 的相关脚本，此处仅写出几个最常用的作为示例。其他脚本详见 Laravel-Mix 官网。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"scripts": &#123;</span><br><span class="line">    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",</span><br><span class="line">    "watch": "npm run development -- --watch",</span><br><span class="line">    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>resources</code> 目录下自由添加需要被处理的前端资源，然后运行 <code>npm run watch</code>，如果使用了 Laravel-Mix 的 <code>browserSync</code> 服务，那么在浏览器中打开 <code>ip:3000</code> 就可以看到能够自动热重载的页面了！</p>
+<h2 id="如何组织前端资源"><a href="#如何组织前端资源" class="headerlink" title="如何组织前端资源"></a>如何组织前端资源</h2><p>当把所有的基建工作都做完之后，就要考虑如何有效得组织资源。下面是我目前正在使用的项目结构。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">├── favicon.ico</span><br><span class="line">├── iconfont</span><br><span class="line">│   └── ...</span><br><span class="line">├── js</span><br><span class="line">│   ├── app.js</span><br><span class="line">│   ├── bootstrap.js</span><br><span class="line">│   ├── components</span><br><span class="line">│   │   └── HelloWorld.vue</span><br><span class="line">│   ├── features</span><br><span class="line">│   │   ├── ChangeBgc.js</span><br><span class="line">│   │   └── main.js</span><br><span class="line">│   └── loader.js</span><br><span class="line">├── scss</span><br><span class="line">│   ├── app.scss</span><br><span class="line">│   ├── _bootstrap.scss</span><br><span class="line">│   ├── _common.scss</span><br><span class="line">│   ├── _hack.scss</span><br><span class="line">│   ├── _iconfont.scss</span><br><span class="line">│   ├── layouts</span><br><span class="line">│   │   └── _base.scss</span><br><span class="line">│   ├── _mixins.scss</span><br><span class="line">│   ├── _reset.scss</span><br><span class="line">│   ├── _variables.scss</span><br><span class="line">│   └── widgets</span><br><span class="line">│       ├── _footer.scss</span><br><span class="line">│       └── _header.scss</span><br><span class="line">└── vendor</span><br><span class="line">    └── swiper</span><br><span class="line">        ├── swiper.min.css</span><br><span class="line">        └── swiper.min.js</span><br></pre></td></tr></table></figure>
+
+<p><code>app.scss</code> 用于注册所有的样式文件。当然，如果有多个布局，可以考虑对其进行拆分。</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// resources</span></span><br><span class="line"><span class="keyword">@import</span> <span class="string">"variables"</span>;</span><br><span class="line"><span class="keyword">@import</span> <span class="string">"mixins"</span>;</span><br><span class="line"><span class="keyword">@import</span> <span class="string">"iconfont"</span>;</span><br><span class="line"><span class="comment">// reset</span></span><br><span class="line"><span class="keyword">@import</span> <span class="string">"~normalize.css/normalize.css"</span>;</span><br><span class="line"><span class="keyword">@import</span> <span class="string">"reset"</span>;</span><br><span class="line"><span class="comment">// libraries</span></span><br><span class="line"><span class="keyword">@import</span> <span class="string">"common"</span>;</span><br><span class="line"><span class="keyword">@import</span> <span class="string">"bootstrap"</span>;</span><br><span class="line"><span class="comment">// views</span></span><br><span class="line"><span class="keyword">@import</span> <span class="string">"layouts/base"</span>;</span><br><span class="line">...</span><br><span class="line"><span class="comment">// hack</span></span><br><span class="line"><span class="keyword">@import</span> <span class="string">"hack"</span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>bootstrap.js</code> 用于注册全局都需要使用的、需要预先加载的功能模块。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>._ = <span class="built_in">require</span>(<span class="string">'lodash'</span>);</span><br><span class="line"><span class="built_in">window</span>.$ = <span class="built_in">window</span>.jQuery = <span class="built_in">require</span>(<span class="string">'jquery'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'popper.js'</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">'bootstrap'</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>app.js</code> 和 <code>loader.js</code> 需要着重讲解一下。为了能让所有的 JS 逻辑都尽可能得被打包工具进行处理，因此我们需要把不同的功能拆分成 JS 模块在 <code>app.js</code> 中统一引入。但有些功能可能仅用于一部分页面，并且可能会出现复用的情况，因此我们不可能只靠引入 <code>app.js</code> 解决所有问题。</p>
+<p>我给出的解决方案是：</p>
+<ul>
+<li><strong>所有的功能都在 <code>app.js</code> 中注册，但并不执行。为了实现这样的效果，我们可以约定每一个功能都必须是一个函数</strong></li>
+<li><strong>何时触发功能，以及触发什么功能都在页面中进行维护</strong></li>
+<li><strong>页面通过加载器 <code>loader.js</code> 加载当前页面需要用到的功能，待页面 onload 后自动触发</strong></li>
+</ul>
+<p>听起来很复杂，但实际上代码实现是相当简单的：</p>
+<p><code>app.js</code>。引入所有 JS 逻辑。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 功能加载器</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./loader'</span>;</span><br><span class="line"><span class="comment">// 所有的功能</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'./features/main'</span>;</span><br><span class="line"><span class="comment">// Vue 相关</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">import</span> HelloWorld <span class="keyword">from</span> <span class="string">'./components/HelloWorld'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">'#app'</span>,</span><br><span class="line">  components: &#123; HelloWorld &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>loader.js</code>。Features 内加载全部的功能模块，每个页面只需要在 <code>RegisteredFeatures</code> 数组中 push 合适的功能模块，页面 onload 后将自动全部执行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.Features = &#123;&#125;;</span><br><span class="line"><span class="built_in">window</span>.RegisteredFeatures = [];</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">window</span>.RegisteredFeatures.forEach(<span class="function"><span class="params">feature</span> =&gt;</span> feature());</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>features/main.js</code>。注册全量的功能模块，每一个模块都必须是一个方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ChangeBgc &#125; <span class="keyword">from</span> <span class="string">'./ChangeBgc'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.Features.ChangeBgc = <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">new</span> ChangeBgc(...args);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.Features.Demo = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`I'm just a demo...`</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>features/ChangeBgc.js</code>。这是一个使用面向对象的例子。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> $ <span class="keyword">from</span> <span class="string">'jquery'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">ChangeBgc</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(trigger, bgc) &#123;</span><br><span class="line">    <span class="keyword">this</span>.bgc = bgc;</span><br><span class="line">    $(trigger).click(<span class="keyword">this</span>.triggeredClick.bind(<span class="keyword">this</span>));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  triggeredClick() &#123;</span><br><span class="line">    $(<span class="string">'body'</span>).css(<span class="string">'background-color'</span>, <span class="keyword">this</span>.bgc);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>layouts/base.html</code>。引入了打包后资源路径的模板文件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;% load static %&#125;</span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"icon"</span> <span class="attr">type</span>=<span class="string">"image/png"</span> <span class="attr">href</span>=<span class="string">"&#123;% static 'favicon.ico' %&#125;"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"&#123;% static 'css/app.css' %&#125;"</span>&gt;</span></span><br><span class="line">  &#123;% block styles %&#125; &#123;% endblock %&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 作为 Vue 的根元素，这个标签内部可以任意使用全局注册的 Vue 组件 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    &#123;% block content %&#125; &#123;% endblock %&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"&#123;% static 'js/manifest.js' %&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"&#123;% static 'js/vendor.js' %&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"&#123;% static 'js/bootstrap.js' %&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"&#123;% static 'js/app.js' %&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  &#123;% block scripts %&#125; &#123;% endblock %&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>index.html</code>。项目的首页，假定需要使用 <code>Demo</code> 和 <code>ChangeBgc</code> 两个功能，因此在 <code>RegisteredFeatures</code> 中 push 两个方法即可。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;% extends "../layouts/base.html" %&#125;</span><br><span class="line">&#123;% load static %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block content %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"index"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"btn"</span>&gt;</span>Change Bgc<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">&#123;% endblock %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block scripts %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">  RegisteredFeatures.push(</span><br><span class="line">    Features.Demo,</span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123; Features.ChangeBgc(<span class="string">'.btn'</span>, <span class="string">'#ccc'</span>) &#125;</span></span><br><span class="line">  )</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在打开项目的首页，控制台将打印来自 <code>Features.Demo</code> 的 <code>I&#39;m just a demo...</code>，并且点击按钮后页面的背景色将变为 <code>#ccc</code>。How Elegant!</p>
+<h2 id="尾巴"><a href="#尾巴" class="headerlink" title="尾巴"></a>尾巴</h2><p>我认为 <code>Elegant</code> 这个词是只有 <code>Eleganter</code> 而没有 <code>Elegantest</code> 的。写代码这码事，不能将就。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/blog/">Home</a></li>
+        
+          <li><a href="/blog/archives/">Archive</a></li>
+        
+          <li><a href="/blog/categories/">Categories</a></li>
+        
+          <li><a href="/blog/tags/">Tags</a></li>
+        
+          <li><a href="/blog/about/">About</a></li>
+        
+          <li><a href="/blog/links/">Links</a></li>
+        
+          <li><a href="/blog/atom.xml">RSS</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#传统是什么样的？"><span class="toc-number">1.</span> <span class="toc-text">传统是什么样的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#痛点在哪里？"><span class="toc-number">2.</span> <span class="toc-text">痛点在哪里？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎样才算优雅？"><span class="toc-number">3.</span> <span class="toc-text">怎样才算优雅？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#那就优雅一把"><span class="toc-number">4.</span> <span class="toc-text">那就优雅一把</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何组织前端资源"><span class="toc-number">5.</span> <span class="toc-text">如何组织前端资源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尾巴"><span class="toc-number">6.</span> <span class="toc-text">尾巴</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://varzy.me/2019/eleganter-site-fe/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://varzy.me/2019/eleganter-site-fe/&text=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://varzy.me/2019/eleganter-site-fe/&title=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://varzy.me/2019/eleganter-site-fe/&is_video=false&description=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=前后端不分离，也要优雅得写前端！&body=Check out this article: https://varzy.me/2019/eleganter-site-fe/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://varzy.me/2019/eleganter-site-fe/&title=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://varzy.me/2019/eleganter-site-fe/&title=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://varzy.me/2019/eleganter-site-fe/&title=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://varzy.me/2019/eleganter-site-fe/&title=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://varzy.me/2019/eleganter-site-fe/&name=前后端不分离，也要优雅得写前端！&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://varzy.me/2019/eleganter-site-fe/&t=前后端不分离，也要优雅得写前端！" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <!-- <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a> -->
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2015-2020
+    Aiden Zhao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/blog/">Home</a></li>
+         
+          <li><a href="/blog/archives/">Archive</a></li>
+         
+          <li><a href="/blog/categories/">Categories</a></li>
+         
+          <li><a href="/blog/tags/">Tags</a></li>
+         
+          <li><a href="/blog/about/">About</a></li>
+         
+          <li><a href="/blog/links/">Links</a></li>
+         
+          <li><a href="/blog/atom.xml">RSS</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/blog/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zys-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="在 ElementUI 中提供了 el-table 和 el-pagination 两个组件，但这两个组件间没有任何关联，我们必须自行实现分页功能。为了能尽可能的复用分页代码，我编写了一个可以自动实现表格数据分页的包裹组件。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 ElementUI 构建一个自动分页组件">
+<meta property="og:url" content="https://varzy.me/2019/element-ui-auto-pagination/index.html">
+<meta property="og:site_name" content="Aiden&#39;s Blog">
+<meta property="og:description" content="在 ElementUI 中提供了 el-table 和 el-pagination 两个组件，但这两个组件间没有任何关联，我们必须自行实现分页功能。为了能尽可能的复用分页代码，我编写了一个可以自动实现表格数据分页的包裹组件。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-01-14T02:07:35.000Z">
+<meta property="article:modified_time" content="2020-09-30T11:10:32.320Z">
+<meta property="article:author" content="Aiden Zhao">
+<meta property="article:tag" content="original">
+<meta property="article:tag" content="tutorial">
+<meta property="article:tag" content="frontend">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="typescript">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用 ElementUI 构建一个自动分页组件</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/blog/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/blog/true" title="Aiden&#39;s Blog" type="application/atom+xml" />
+    
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/blog/">Home</a></li>
+         
+          <li><a href="/blog/archives/">Archive</a></li>
+         
+          <li><a href="/blog/categories/">Categories</a></li>
+         
+          <li><a href="/blog/tags/">Tags</a></li>
+         
+          <li><a href="/blog/about/">About</a></li>
+         
+          <li><a href="/blog/links/">Links</a></li>
+         
+          <li><a href="/blog/atom.xml">RSS</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/blog/2019/js-obj-oop/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/blog/2018/2017-2018-summary/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://varzy.me/2019/element-ui-auto-pagination/" target="_blank" rel="noopener"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://varzy.me/2019/element-ui-auto-pagination/&text=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://varzy.me/2019/element-ui-auto-pagination/&title=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://varzy.me/2019/element-ui-auto-pagination/&is_video=false&description=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 ElementUI 构建一个自动分页组件&body=Check out this article: https://varzy.me/2019/element-ui-auto-pagination/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://varzy.me/2019/element-ui-auto-pagination/&title=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://varzy.me/2019/element-ui-auto-pagination/&title=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://varzy.me/2019/element-ui-auto-pagination/&title=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://varzy.me/2019/element-ui-auto-pagination/&title=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://varzy.me/2019/element-ui-auto-pagination/&name=使用 ElementUI 构建一个自动分页组件&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://varzy.me/2019/element-ui-auto-pagination/&t=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用 ElementUI 构建一个自动分页组件
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Aiden's Blog</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-01-14T02:07:35.000Z" itemprop="datePublished">2019-01-14</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/blog/categories/Code/">Code</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/frontend/" rel="tag">frontend</a>, <a class="tag-link" href="/blog/tags/original/" rel="tag">original</a>, <a class="tag-link" href="/blog/tags/tutorial/" rel="tag">tutorial</a>, <a class="tag-link" href="/blog/tags/typescript/" rel="tag">typescript</a>, <a class="tag-link" href="/blog/tags/vue/" rel="tag">vue</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>在 ElementUI 中提供了 <code>el-table</code> 和 <code>el-pagination</code> 两个组件，但这两个组件间没有任何关联，我们必须自行实现分页功能。为了能尽可能的复用分页代码，我编写了一个可以自动实现表格数据分页的包裹组件。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"table_wrapper"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table</span> <span class="attr">:data</span>=<span class="string">"pagingData"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">type</span>=<span class="string">"index"</span> <span class="attr">:index</span>=<span class="string">"calcPagingIndex"</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">"table-columns"</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-table</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-pagination</span></span></span><br><span class="line"><span class="tag">      <span class="attr">background</span></span></span><br><span class="line"><span class="tag">      <span class="attr">v-if</span>=<span class="string">"hasMultiplePages"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">style</span>=<span class="string">"margin-top: 24px"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">layout</span>=<span class="string">"total, prev, pager, next, jumper"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:page-size</span>=<span class="string">"paginationSize"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:total</span>=<span class="string">"dataLength"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">:current-page.sync</span>=<span class="string">"currentPage"</span></span></span><br><span class="line"><span class="tag">    &gt;</span><span class="tag">&lt;/<span class="name">el-pagination</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">"ts"</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">import</span> &#123; Component, Vue, Prop &#125; <span class="keyword">from</span> <span class="string">'vue-property-decorator'</span>;</span></span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">TableWrapper</span> <span class="keyword">extends</span> <span class="title">Vue</span> </span>&#123;</span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 全量数据</span></span></span><br><span class="line"><span class="actionscript">  @Prop(&#123; type: Array, required: <span class="literal">true</span> &#125;) <span class="keyword">private</span> totalData!: any[];</span></span><br><span class="line"><span class="actionscript">  <span class="comment">// 分页步长</span></span></span><br><span class="line"><span class="actionscript">  @Prop(&#123; type: Number, <span class="keyword">default</span>: <span class="number">15</span> &#125;) <span class="keyword">private</span> paginationSize!: number;</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">  <span class="keyword">private</span> currentPage = <span class="number">1</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="actionscript">  <span class="comment">// 分页总长度</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">get</span> dataLength(): number &#123;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">return</span> <span class="keyword">this</span>.totalData.length;</span></span><br><span class="line">  &#125;</span><br><span class="line"><span class="actionscript">  <span class="comment">// 当前页码的数据</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">get</span> pagingData(): any[] &#123;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">return</span> <span class="keyword">this</span>.totalData.slice(</span></span><br><span class="line"><span class="actionscript">      (<span class="keyword">this</span>.currentPage - <span class="number">1</span>) * <span class="keyword">this</span>.paginationSize,</span></span><br><span class="line"><span class="actionscript">      <span class="keyword">this</span>.currentPage * <span class="keyword">this</span>.paginationSize</span></span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"><span class="actionscript">  <span class="comment">// 是否有多页</span></span></span><br><span class="line"><span class="javascript">  <span class="keyword">get</span> hasMultiplePages(): boolean &#123;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">return</span> <span class="keyword">this</span>.dataLength &gt; <span class="keyword">this</span>.paginationSize;</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="actionscript">  <span class="comment">// 计算表格索引</span></span></span><br><span class="line"><span class="actionscript">  <span class="keyword">public</span> calcPagingIndex(index: number): number &#123;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">return</span> (<span class="keyword">this</span>.currentPage - <span class="number">1</span>) * <span class="keyword">this</span>.paginationSize + index + <span class="number">1</span>;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用也非常的简单，只需要将全量数据通过 prop 传入组件，并且通过 slot 插入表格内容即可。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table-wrapper</span> <span class="attr">:total-data</span>=<span class="string">"tableData"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">template</span> <span class="attr">slot</span>=<span class="string">"table-columns"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">"Name"</span> <span class="attr">prop</span>=<span class="string">"name"</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">"Phone"</span> <span class="attr">prop</span>=<span class="string">"phone"</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-table-column</span> <span class="attr">label</span>=<span class="string">"Email"</span> <span class="attr">prop</span>=<span class="string">"email"</span>&gt;</span><span class="tag">&lt;/<span class="name">el-table-column</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table-wrapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个组件目前只适用于静态数据的分页，理论上使其支持动态分页也并非难事。我们可以将接口地址传入组件内部，每当页码改变时就请求接口获取数据，并实时插入到 totalData 数组中。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/blog/">Home</a></li>
+        
+          <li><a href="/blog/archives/">Archive</a></li>
+        
+          <li><a href="/blog/categories/">Categories</a></li>
+        
+          <li><a href="/blog/tags/">Tags</a></li>
+        
+          <li><a href="/blog/about/">About</a></li>
+        
+          <li><a href="/blog/links/">Links</a></li>
+        
+          <li><a href="/blog/atom.xml">RSS</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://varzy.me/2019/element-ui-auto-pagination/" target="_blank" rel="noopener"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://varzy.me/2019/element-ui-auto-pagination/&text=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://varzy.me/2019/element-ui-auto-pagination/&title=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://varzy.me/2019/element-ui-auto-pagination/&is_video=false&description=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用 ElementUI 构建一个自动分页组件&body=Check out this article: https://varzy.me/2019/element-ui-auto-pagination/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://varzy.me/2019/element-ui-auto-pagination/&title=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://varzy.me/2019/element-ui-auto-pagination/&title=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://varzy.me/2019/element-ui-auto-pagination/&title=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://varzy.me/2019/element-ui-auto-pagination/&title=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://varzy.me/2019/element-ui-auto-pagination/&name=使用 ElementUI 构建一个自动分页组件&description=" target="_blank" rel="noopener"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://varzy.me/2019/element-ui-auto-pagination/&t=使用 ElementUI 构建一个自动分页组件" target="_blank" rel="noopener"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <!-- <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a> -->
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2015-2020
+    Aiden Zhao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/blog/">Home</a></li>
+         
+          <li><a href="/blog/archives/">Archive</a></li>
+         
+          <li><a href="/blog/categories/">Categories</a></li>
+         
+          <li><a href="/blog/tags/">Tags</a></li>
+         
+          <li><a href="/blog/about/">About</a></li>
+         
+          <li><a href="/blog/links/">Links</a></li>
+         
+          <li><a href="/blog/atom.xml">RSS</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/blog/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/blog/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'zys-blog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>
