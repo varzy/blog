@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://varzy.me/"/>
-  <updated>2021-08-21T10:16:55.479Z</updated>
+  <updated>2021-07-24T09:37:53.668Z</updated>
   <id>https://varzy.me/</id>
   
   <author>
@@ -15,37 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>停更警告：博客已迁移至 blog.varzy.me</title>
-    <link href="https://varzy.me/2021/blog-migration-again/"/>
-    <id>https://varzy.me/2021/blog-migration-again/</id>
-    <published>2021-03-15T03:19:24.000Z</published>
-    <updated>2021-08-21T10:16:55.479Z</updated>
-    
-    <content type="html"><![CDATA[<p>没错，我又要更换博客平台了。如第一篇所写的一样，我的人生确实少不了折腾。</p><p>最近几年我迷上了笔记软件 Notion，我已经把技术类文章全面迁移到了 Notion，而这里就如同副标题一般，仅保留了一些思索与臆语。我钟情于 Notion 的编辑体验，也早就想把所有文章全部迁移到 Notion，但可惜 Notion 的 SEO 优化实在是个问题。但随着近期 Notion API 的成熟，我觉得是时候尝试迁移到 Notion 了。</p><p>写下这段文字时，我用上了 <a href="https://github.com/craigary/nobelium" target="_blank" rel="noopener">Nobelium</a> 这套解决方案，本质上是使用 Nextjs + Notion API 进行服务端渲染，配合 Vercel 可以完美实现 Notion 内编写实时生效。</p><p>我相信 Nobelium 仍不是完美的解决方案，比如现在想要更换主题需要直接改动源码，这对于非前端程序员来说不甚友好。但 Nobelium 无疑提供了一种思路。我相信未来会有更好得轮子，我会自己造一个轮子也说不定。</p><p>好了就这样吧。这里的寥寥数篇文章是托管在 GitHub Pages 上的，如果没什么意外我也不会特意停掉，而新的博客地址是: <a href="https://blog.varzy.me" target="_blank" rel="noopener">https://blog.varzy.me</a>。Enjoy~</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;没错，我又要更换博客平台了。如第一篇所写的一样，我的人生确实少不了折腾。&lt;/p&gt;
-&lt;p&gt;最近几年我迷上了笔记软件 Notion，我已经把技术类文章全面迁移到了 Notion，而这里就如同副标题一般，仅保留了一些思索与臆语。我钟情于 Notion 的编辑体验，也早就想把所有文
-      
-    
-    </summary>
-    
-    
-      <category term="Essay" scheme="https://varzy.me/categories/Essay/"/>
-    
-    
-      <category term="original" scheme="https://varzy.me/tags/original/"/>
-    
-      <category term="recommend" scheme="https://varzy.me/tags/recommend/"/>
-    
-      <category term="blog" scheme="https://varzy.me/tags/blog/"/>
-    
-  </entry>
   
   <entry>
     <title>关于这个博客的一些变更</title>
@@ -63,6 +32,37 @@
         &lt;p&gt;一句话总结：&lt;strong&gt;这里不会再更新技术文章了，而是只保留我的思索、臆语和长文字。以前的和未来的技术文章都会统一发布在 &lt;a href=&quot;https://varzy.me/notes&quot;&gt;Notion 上的笔记页面&lt;/a&gt;。&lt;/strong&gt;&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;大
+      
+    
+    </summary>
+    
+    
+      <category term="Essay" scheme="https://varzy.me/categories/Essay/"/>
+    
+    
+      <category term="original" scheme="https://varzy.me/tags/original/"/>
+    
+      <category term="recommend" scheme="https://varzy.me/tags/recommend/"/>
+    
+      <category term="blog" scheme="https://varzy.me/tags/blog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>停更警告：博客已迁移至 blog.varzy.me</title>
+    <link href="https://varzy.me/2021/blog-migration-again/"/>
+    <id>https://varzy.me/2021/blog-migration-again/</id>
+    <published>2021-03-15T03:19:24.000Z</published>
+    <updated>2021-08-21T10:24:11.863Z</updated>
+    
+    <content type="html"><![CDATA[<p>没错，我又要更换博客平台了。如第一篇所写的一样，我的人生确实少不了折腾。</p><p>最近几年我迷上了笔记软件 Notion，我已经把技术类文章全面迁移到了 Notion，而这里就如同副标题一般，仅保留了一些思索与臆语。我钟情于 Notion 的编辑体验，也早就想把所有文章全部迁移到 Notion，但可惜 Notion 的 SEO 优化实在是个问题。但随着近期 Notion API 的成熟，我觉得是时候尝试迁移到 Notion 了。</p><p>写下这段文字时，我用上了 <a href="https://github.com/craigary/nobelium" target="_blank" rel="noopener">Nobelium</a> 这套解决方案，本质上是使用 Nextjs + Notion API 进行服务端渲染，配合 Vercel 可以完美实现 Notion 内编写实时生效。</p><p>我相信 Nobelium 仍不是完美的解决方案，比如现在想要更换主题需要直接改动源码，这对于非前端程序员来说不甚友好。但 Nobelium 无疑提供了一种思路。我相信未来会有更好得轮子，我会自己造一个轮子也说不定。好了就这样吧。这里的寥寥数篇文章是托管在 GitHub Pages 上的，如果没什么意外我也不会特意停掉，而新的博客地址是:</p><blockquote><p><a href="https://blog.varzy.me" target="_blank" rel="noopener">https://blog.varzy.me</a></p></blockquote><p>Enjoy and Bye~</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;没错，我又要更换博客平台了。如第一篇所写的一样，我的人生确实少不了折腾。&lt;/p&gt;
+&lt;p&gt;最近几年我迷上了笔记软件 Notion，我已经把技术类文章全面迁移到了 Notion，而这里就如同副标题一般，仅保留了一些思索与臆语。我钟情于 Notion 的编辑体验，也早就想把所有文
       
     
     </summary>
@@ -104,11 +104,11 @@
     
       <category term="original" scheme="https://varzy.me/tags/original/"/>
     
+      <category term="北京" scheme="https://varzy.me/tags/%E5%8C%97%E4%BA%AC/"/>
+    
       <category term="recommend" scheme="https://varzy.me/tags/recommend/"/>
     
       <category term="summary" scheme="https://varzy.me/tags/summary/"/>
-    
-      <category term="北京" scheme="https://varzy.me/tags/%E5%8C%97%E4%BA%AC/"/>
     
       <category term="天津" scheme="https://varzy.me/tags/%E5%A4%A9%E6%B4%A5/"/>
     
@@ -215,17 +215,17 @@
     
       <category term="recommend" scheme="https://varzy.me/tags/recommend/"/>
     
-      <category term="windows" scheme="https://varzy.me/tags/windows/"/>
-    
-      <category term="device" scheme="https://varzy.me/tags/device/"/>
-    
       <category term="tutorial" scheme="https://varzy.me/tags/tutorial/"/>
     
       <category term="laravel" scheme="https://varzy.me/tags/laravel/"/>
     
+      <category term="windows" scheme="https://varzy.me/tags/windows/"/>
+    
       <category term="macos" scheme="https://varzy.me/tags/macos/"/>
     
       <category term="mac" scheme="https://varzy.me/tags/mac/"/>
+    
+      <category term="device" scheme="https://varzy.me/tags/device/"/>
     
   </entry>
   
@@ -262,9 +262,9 @@
     
       <category term="windows" scheme="https://varzy.me/tags/windows/"/>
     
-      <category term="softwares" scheme="https://varzy.me/tags/softwares/"/>
-    
       <category term="device" scheme="https://varzy.me/tags/device/"/>
+    
+      <category term="softwares" scheme="https://varzy.me/tags/softwares/"/>
     
   </entry>
   
@@ -295,11 +295,11 @@
     
       <category term="original" scheme="https://varzy.me/tags/original/"/>
     
+      <category term="北京" scheme="https://varzy.me/tags/%E5%8C%97%E4%BA%AC/"/>
+    
       <category term="recommend" scheme="https://varzy.me/tags/recommend/"/>
     
       <category term="summary" scheme="https://varzy.me/tags/summary/"/>
-    
-      <category term="北京" scheme="https://varzy.me/tags/%E5%8C%97%E4%BA%AC/"/>
     
   </entry>
   
